@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class UserRequest {
     @NotBlank
     private String email;
     @NotBlank
-    @Min(6)
+    @Length(min = 6)
     private String password;
     @NotNull
     private Role role;

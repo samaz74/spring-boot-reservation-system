@@ -20,6 +20,4 @@ public class ReservationRequest {
     private LocalDateTime StartTime;
     @NotNull
     private LocalDateTime EndTime;
-    @NotNull
-    private ReservationStatus status;
 }

@@ -1,25 +1,22 @@
-package com.app.reservation.dto.Mappers;
+package com.app.reservation.dto.mappers;
 
-import com.app.reservation.Service.ResourceService;
-import com.app.reservation.Service.UserService;
 import com.app.reservation.dto.ReservationRequest;
 import com.app.reservation.dto.ReservationResponse;
 import com.app.reservation.models.Reservation;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.app.reservation.models.Resource;
+import com.app.reservation.models.User;
+import com.app.reservation.models.enums.ReservationStatus;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReservationMapper {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ResourceService resourceService;
-    public Reservation toEntity(ReservationRequest reservationRequest) {
-        return new Reservation(userService.findByUserIdEntity(reservationRequest.getUserId()),
-                resourceService.findResourceByIdEntity(reservationRequest.getResourceId()),
+
+    public Reservation toEntity(ReservationRequest reservationRequest, User user, Resource resource) {
+        return new Reservation(user,
+                resource,
                 reservationRequest.getStartTime(),
                 reservationRequest.getEndTime(),
-                reservationRequest.getStatus()
+                ReservationStatus.PENDING
                 );
     }
     public ReservationResponse toResponse(Reservation reservation) {

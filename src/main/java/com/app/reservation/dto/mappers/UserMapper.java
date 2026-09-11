@@ -1,4 +1,4 @@
-package com.app.reservation.dto.Mappers;
+package com.app.reservation.dto.mappers;
 
 import com.app.reservation.dto.UserRequest;
 import com.app.reservation.dto.UserResponse;

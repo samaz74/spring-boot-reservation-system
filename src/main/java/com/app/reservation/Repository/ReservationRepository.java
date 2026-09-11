@@ -12,6 +12,7 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByUser(User user);
     List<Reservation> findByResource(Resource resource);
-    boolean existsByResourceAndStatusAndStartTimeBeforeAndEndTimeAfter(Resource resource, ReservationStatus status, LocalDateTime requestedEnd, LocalDateTime requestedStart);
+    List<Reservation> findByResourceAndStartTimeBeforeAndEndTimeAfter(Resource resource,  LocalDateTime requestedEnd, LocalDateTime requestedStart);
+
     List<Reservation> findByStatus(ReservationStatus status);
 }
