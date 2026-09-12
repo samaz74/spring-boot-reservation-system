@@ -4,17 +4,23 @@ import com.app.reservation.Repository.ReservationRepository;
 import com.app.reservation.dto.ReservationRequest;
 import com.app.reservation.dto.ReservationResponse;
 import com.app.reservation.dto.mappers.ReservationMapper;
+import com.app.reservation.exception.AccessDeniedException;
 import com.app.reservation.exception.InvalidOperationException;
+import com.app.reservation.exception.ResourceNotFoundException;
 import com.app.reservation.models.Reservation;
 import com.app.reservation.models.Resource;
 import com.app.reservation.models.User;
 import com.app.reservation.models.enums.ReservationStatus;
+import com.app.reservation.models.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -58,5 +64,38 @@ public class ReservationService {
                 }else throw new InvalidOperationException("Start time must be after now");
             }else throw new InvalidOperationException("start time must be before end time");
         }else throw new InvalidOperationException("Resource is not active");
+    }
+    public ReservationResponse getReservationWithId(Long id){
+        return reservationRepository.findById(id).map(reservationMapper::toResponse).orElseThrow(()-> new ResourceNotFoundException("Not Found"));
+    }
+    public List<ReservationResponse> getAllReservations(){
+        return reservationRepository.findAll().stream().map(reservationMapper::toResponse).collect(Collectors.toList());
+    }
+    public List<ReservationResponse> getResourceReservations(Long resourceId){
+        Resource resource = resourceService.findResourceByIdEntity(resourceId);
+        return reservationRepository.findByResource(resource).stream().map(reservationMapper::toResponse).collect(Collectors.toList());
+    }
+    @Transactional
+    public ReservationResponse changeStatus(Long id , ReservationStatus status, Principal principal){
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Reservation not found"));
+        User user = userService.findByEmailEntity(principal.getName());
+
+        if(user.getRole()== Role.ADMIN){
+            if(reservation.getStatus().equals(ReservationStatus.PENDING)&&status.equals(ReservationStatus.CONFIRMED)){
+                reservation.setStatus(status);
+                return reservationMapper.toResponse(reservation);
+            } else if (reservation.getStatus().equals(ReservationStatus.PENDING)&&status.equals(ReservationStatus.REJECTED)){
+                reservation.setStatus(status);
+                return reservationMapper.toResponse(reservation);
+            } else if (reservation.getStatus().equals(ReservationStatus.CONFIRMED)&&status.equals(ReservationStatus.CANCELLED)){
+                reservation.setStatus(status);
+                return reservationMapper.toResponse(reservation);
+            } else throw new InvalidOperationException("Invalid Operation");
+        }else if (user.equals(reservation.getUser())){
+            if((reservation.getStatus().equals(ReservationStatus.CONFIRMED)|| reservation.getStatus().equals(ReservationStatus.PENDING)) && status.equals(ReservationStatus.CANCELLED)){
+                reservation.setStatus(status);
+                return reservationMapper.toResponse(reservation);
+            }else throw new InvalidOperationException("Invalid Operation");
+        }throw new AccessDeniedException("Access Denied");
     }
 }

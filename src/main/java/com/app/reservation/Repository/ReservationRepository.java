@@ -15,4 +15,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByResourceAndStartTimeBeforeAndEndTimeAfter(Resource resource,  LocalDateTime requestedEnd, LocalDateTime requestedStart);
 
     List<Reservation> findByStatus(ReservationStatus status);
+
+    Long id(Long id);
 }
