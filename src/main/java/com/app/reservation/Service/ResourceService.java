@@ -1,6 +1,6 @@
 package com.app.reservation.Service;
 
-import com.app.reservation.Repository.ResourceRepository;
+import com.app.reservation.repository.ResourceRepository;
 import com.app.reservation.dto.ResourceRequest;
 import com.app.reservation.dto.ResourceResponse;
 import com.app.reservation.dto.mappers.ResourceMapper;

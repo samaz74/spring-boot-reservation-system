@@ -1,6 +1,6 @@
 package com.app.reservation.Service;
 
-import com.app.reservation.Repository.ReservationRepository;
+import com.app.reservation.repository.ReservationRepository;
 import com.app.reservation.dto.ReservationRequest;
 import com.app.reservation.dto.ReservationResponse;
 import com.app.reservation.dto.mappers.ReservationMapper;

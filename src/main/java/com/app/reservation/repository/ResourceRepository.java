@@ -1,4 +1,4 @@
-package com.app.reservation.Repository;
+package com.app.reservation.repository;
 
 import com.app.reservation.models.Resource;
 import com.app.reservation.models.enums.ResourceType;
