@@ -45,6 +45,7 @@ public class ResourceService {
             resource.setName(resourceRequest.getName());
             resource.setCapacity(resourceRequest.getCapacity());
             resource.setDescription(resourceRequest.getDescription());
+            resource.setActive(resourceRequest.isActive());
             return resourceMapper.toResponse(resource);
         }else throw new AccessDeniedException("Access Denied");
     }
