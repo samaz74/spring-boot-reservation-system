@@ -68,6 +68,9 @@ public class ReservationService {
     public ReservationResponse getReservationWithId(Long id){
         return reservationRepository.findById(id).map(reservationMapper::toResponse).orElseThrow(()-> new ResourceNotFoundException("Not Found"));
     }
+    public List<ReservationResponse> getCurrentUserReservations(Principal principal){
+        return reservationRepository.findByUser(userService.findByEmailEntity(principal.getName())).stream().map(reservationMapper::toResponse).collect(Collectors.toList());
+    }
     public List<ReservationResponse> getAllReservations(){
         return reservationRepository.findAll().stream().map(reservationMapper::toResponse).collect(Collectors.toList());
     }

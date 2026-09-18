@@ -1,6 +1,7 @@
 package com.app.reservation.controller;
 
 import com.app.reservation.Service.UserService;
+import com.app.reservation.dto.UserRequest;
 import com.app.reservation.dto.UserResponse;
 import com.app.reservation.models.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse changeUserAuthority(@PathVariable Long id, @RequestBody Role role){
         return userService.changeUserRole(id,role);
+    }
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void patchUserActivity(@PathVariable Long id){
+        userService.changeUserActivation(id);
     }
 
 
