@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-invalidatedToken
+      author: peyman
+      changes:
+        - createTable:
+            tableName: invalidated_token
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                    name: email
+                    type: varchar
+                    constraints:
+                      nullable: false
+              - column:
+                  name: expires_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false

@@ -1,9 +1,6 @@
 package com.app.reservation.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Table(name = "invalidated_token")
 public class InvalidatedToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
