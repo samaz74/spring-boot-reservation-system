@@ -1,14 +1,26 @@
+version: '3.8'
+
 services:
-  mariadb:
-    image: 'mariadb:latest'
+  db:
+    image: mariadb:10.11
     environment:
-      - 'MARIADB_DATABASE=mydatabase'
-      - 'MARIADB_PASSWORD=secret'
-      - 'MARIADB_ROOT_PASSWORD=verysecret'
-      - 'MARIADB_USER=myuser'
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: reservationSystem
     ports:
-      - '3306'
-  redis:
-    image: 'redis:latest'
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  app:
+    build: .
     ports:
-      - '6379'
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/reservationSystem
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+
+volumes:
+  db-data:

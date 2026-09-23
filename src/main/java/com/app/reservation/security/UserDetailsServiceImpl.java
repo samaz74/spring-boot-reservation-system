@@ -2,7 +2,6 @@ package com.app.reservation.security;
 
 import com.app.reservation.models.User;
 import com.app.reservation.repository.UserRepository;
-import com.sun.security.auth.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

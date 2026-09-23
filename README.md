@@ -19,10 +19,10 @@ through an administrator-controlled approval workflow.
 -   Maximum reservation duration of 4 hours
 -   Reservation overlap detection
 -   Approval workflow with:
-  -   `PENDING`
-  -   `CONFIRMED`
-  -   `REJECTED`
-  -   `CANCELLED`
+    -   `PENDING`
+    -   `CONFIRMED`
+    -   `REJECTED`
+    -   `CANCELLED`
 -   `PENDING` and `CONFIRMED` reservations block overlapping time slots
 -   Admin/user reservation status-transition rules
 -   Role-based access with `ADMIN` and `USER`
